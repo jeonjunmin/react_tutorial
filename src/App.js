@@ -1,44 +1,10 @@
 // import logo from './logo.svg';
 import React, {Component} from 'react';
 import './App.css';
+import Toc from "./components/TOC"  //TOC.js파일의 Toc클래스를 쓸 수 있게 해준다.
+import Content from "./components/CONTENT"  //CONTENT.js파일의 Content클래스를 쓸 수 있게 해준다.
+import Subject from "./components/SUBJECT"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
 
-
-class Subject extends Component {
-  render() {
-    return (
-      <header>
-        <h1>{this.props.title}</h1>
-        {this.props.sub}       
-      </header>
-    );
-  }
-}
-
-
-class Toc extends Component {
-  render() {
-    return (
-      <nav>
-        <ul>
-          <li><a href="1.html">HTML</a></li>
-          <li><a href="2.html">CSS</a></li>
-          <li><a href="3.html">JavaScript</a></li>
-        </ul>
-      </nav>
-    );
-  }
-}
-
-class Content extends Component {
-  render() {
-    return (
-      <article>
-        <h1>{this.props.title}</h1>
-        {this.props.desc}
-      </article>
-    );
-  }
-}
 
 class App extends Component {
   render() {
