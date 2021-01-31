@@ -7,10 +7,17 @@ import Subject from "./components/SUBJECT"  //SUBJECT.js파일의 Subject클래�
 
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      subject:{title:'WEB',sub:'World Wide Web'}
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <Subject title="WEB" sub="world wide web!"></Subject>
+        <Subject title={this.state.subject.title} sub={this.state.subject.sub}></Subject>
         <Subject title="React" sub="For UI"></Subject>
         <Toc></Toc>
         <Content title="HTML" desc="HTML is HyperText Markup Language."></Content>
