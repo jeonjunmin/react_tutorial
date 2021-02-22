@@ -6,7 +6,11 @@ class Toc extends Component {
       var data = this.props.data;
       var i = 0;
       while(i < data.length){
-        lists.push(<li key={data[i].id}><a href = {"/content/"+data[i].id}>{data[i].title}</a></li>);
+        lists.push(<li key={data[i].id}><a href = {"/content/"+data[i].id} 
+        onClick={function(e){ 
+          e.preventDefault(); //다른페이지로 가지 않게 하는것
+          this.props.onChangePage();
+         }.bind(this)}>{data[i].title}</a></li>);
         i = i + 1;
       }
 

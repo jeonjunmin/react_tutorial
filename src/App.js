@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      mode:'welcome',
+      mode:'read',
       subject:{title:'WEB',sub:'World Wide Web'},
       welcome:{title:"Welcome",desc:"Hello, React!!"},
       contents:[
@@ -41,12 +41,17 @@ class App extends Component {
             e.preventDefault();
             //this.state.mode = 'welcome';
             this.setState({
-              mode:'read'
+              mode:'welcome'
             });
           }.bind(this)}>{this.state.subject.title}</a></h1>  
           {this.state.subject.sub}       
         </header>
-        <Toc data={this.state.contents}></Toc>
+        <Toc onChangePage={function(){
+          this.setState({
+            mode:'read'
+          });
+          
+        }.bind(this)} data={this.state.contents}></Toc>
         <Content title={_title} desc={_desc}></Content>
       </div>
     );    
