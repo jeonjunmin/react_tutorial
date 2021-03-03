@@ -4,6 +4,7 @@ import './App.css';
 import Toc from "./components/TOC"  //TOC.js파일의 Toc클래스를 쓸 수 있게 해준다.
 import Content from "./components/CONTENT"  //CONTENT.js파일의 Content클래스를 쓸 수 있게 해준다.
 import Subject from "./components/SUBJECT"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
+import Control from "./components/Control"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
 
 
 class App extends Component {
@@ -65,6 +66,11 @@ class App extends Component {
           });
           
         }.bind(this)} data={this.state.contents}></Toc>
+        <Control onChangeMode={function(_mode){
+          this.setState({
+            mode:_mode
+          });
+        }.bind(this)}></Control>
         <Content title={_title} desc={_desc}></Content>
       </div>
     );    
