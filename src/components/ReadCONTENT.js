@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
 
-class Content extends Component {
+class ReadContent extends Component {
     render() {
       return (
         <article>
@@ -12,4 +12,4 @@ class Content extends Component {
     }
   }
   
-  export default Content  //외부에서 Content클래스를 쓸수 있게 해준다.
+  export default ReadContent  //외부에서 Content클래스를 쓸수 있게 해준다.

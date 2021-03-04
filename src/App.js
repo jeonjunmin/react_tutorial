@@ -2,9 +2,10 @@
 import React, {Component} from 'react';
 import './App.css';
 import Toc from "./components/TOC"  //TOC.js파일의 Toc클래스를 쓸 수 있게 해준다.
-import Content from "./components/CONTENT"  //CONTENT.js파일의 Content클래스를 쓸 수 있게 해준다.
+import ReadContent from "./components/ReadCONTENT"  //CONTENT.js파일의 Content클래스를 쓸 수 있게 해준다.
 import Subject from "./components/SUBJECT"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
 import Control from "./components/Control"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
+import CreateContent from "./components/CreateCONTENT"
 
 
 class App extends Component {
@@ -25,10 +26,11 @@ class App extends Component {
   
   //render함수는 props, state값이 바뀌면 재호출 되도록 되어있다.(화면이 다시 그려진다.)
   render() {
-    var _title, _desc = null;
+    var _title, _desc ,_article= null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if (this.state.mode === 'read'){
       var i = 0;
       while(i<this.state.contents.length){
@@ -42,6 +44,9 @@ class App extends Component {
       }
       // _title = this.state.contents[0].title;
       // _desc = this.state.contents[0].desc
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+    } else if (this.state.mode === 'create'){
+      _article = <CreateContent></CreateContent>
     }
     return (
       <div className="App">
@@ -71,7 +76,7 @@ class App extends Component {
             mode:_mode
           });
         }.bind(this)}></Control>
-        <Content title={_title} desc={_desc}></Content>
+        {_article}
       </div>
     );    
   }
