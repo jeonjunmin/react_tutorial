@@ -11,6 +11,7 @@ import CreateContent from "./components/CreateCONTENT"
 class App extends Component {
   constructor(props){
     super(props);
+    this.max_content_id = 3;
     this.state = {
       mode:'create',
       selected_content_id:2,
@@ -46,8 +47,27 @@ class App extends Component {
       // _desc = this.state.contents[0].desc
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if (this.state.mode === 'create'){
-      _article = <CreateContent onSubmit={function(_title,_desc){
-        alert(_title);
+      _article = <CreateContent onSubmit={function(_title,_desc){        
+        this.max_content_id = this.max_content_id+1;
+        
+        //**push로 데이터 삽입시 기존데이터를 바꾼다.
+        // this.state.contents.push(
+        //   {id:this.max_content_id, title:_title, desc:_desc}
+        // )
+        // this.setState({
+        //   contents:this.state.contents
+        // })
+        
+        //**concat로 데이터 삽입시 기존데이터를 건드리지 않는다.
+        var _contents = this.state.contents.concat(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        )
+        this.setState({
+          contents:_contents
+        })
+       
+        
+
       }.bind(this)}></CreateContent>
     }
     return (
