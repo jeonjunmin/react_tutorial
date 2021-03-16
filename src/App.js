@@ -6,6 +6,7 @@ import ReadContent from "./components/ReadCONTENT"  //CONTENT.js파일의 Conten
 import Subject from "./components/SUBJECT"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
 import Control from "./components/Control"  //SUBJECT.js파일의 Subject클래스를 쓸 수 있게 해준다.
 import CreateContent from "./components/CreateCONTENT"
+import UpdateContent from "./components/UpdateCONTENT"
 
 
 class App extends Component {
@@ -24,30 +25,58 @@ class App extends Component {
       ]
     }
   }
-  
-  //render함수는 props, state값이 바뀌면 재호출 되도록 되어있다.(화면이 다시 그려진다.)
-  render() {
-    var _title, _desc ,_article= null;
+
+  getReadContent(){
+    var i = 0;
+    while(i<this.state.contents.length){
+      var data = this.state.contents[i];
+      if(data.id === this.state.selected_content_id){
+        // _title = data.title;
+        // _desc = data.desc;
+        return data;
+        break;
+      }
+      i = i+1;
+    }
+  }
+
+  getContent(){
+    var _title, _desc ,_article, _content= null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     } else if (this.state.mode === 'read'){
-      var i = 0;
-      while(i<this.state.contents.length){
-        var data = this.state.contents[i];
-        if(data.id === this.state.selected_content_id){
-          _title = data.title;
-          _desc = data.desc;
-          break;
-        }
-        i = i+1;
-      }
+      _content = this.getReadContent();
+      
       // _title = this.state.contents[0].title;
       // _desc = this.state.contents[0].desc
-      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+      _article = <ReadContent title={_content.title} desc={_content.desc}></ReadContent>
+      
     } else if (this.state.mode === 'create'){
       _article = <CreateContent onSubmit={function(_title,_desc){        
+        this.max_content_id = this.max_content_id+1;
+        
+        //**push로 데이터 삽입시 기존데이터를 바꾼다.
+        // this.state.contents.push(
+        //   {id:this.max_content_id, title:_title, desc:_desc}
+        // )
+        // this.setState({
+        //   contents:this.state.contents
+        // })
+        
+        //**concat로 데이터 삽입시 기존데이터를 건드리지 않는다.
+        var _contents = this.state.contents.concat(
+          {id:this.max_content_id, title:_title, desc:_desc}
+        )
+        this.setState({
+          contents:_contents
+        })
+               
+      }.bind(this)}></CreateContent>
+    }else if (this.state.mode === 'update'){
+      _content = this.getReadContent();
+      _article = <UpdateContent data={_content} onSubmit={function(_title,_desc){        
         this.max_content_id = this.max_content_id+1;
         
         //**push로 데이터 삽입시 기존데이터를 바꾼다.
@@ -68,8 +97,16 @@ class App extends Component {
        
         
 
-      }.bind(this)}></CreateContent>
+      }.bind(this)}></UpdateContent>
     }
+
+
+    return _article;
+
+  }
+  //render함수는 props, state값이 바뀌면 재호출 되도록 되어있다.(화면이 다시 그려진다.)
+  render() {
+    
     return (
       <div className="App">
         {/* <Subject title={this.state.subject.title} sub={this.state.subject.sub}></Subject>
@@ -98,7 +135,7 @@ class App extends Component {
             mode:_mode
           });
         }.bind(this)}></Control>
-        {_article}
+        {this.getContent()}
       </div>
     );    
   }
