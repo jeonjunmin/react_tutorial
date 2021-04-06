@@ -2,6 +2,20 @@
 import React, {Component} from 'react';
 
 class UpdateContent extends Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        title:this.props.data.title,
+        desc:this.props.data.desc
+      }
+      this.inputFormHandler = this.inputFormHandler.bind(this);
+    }
+
+    inputFormHandler(e){
+      //[e.target.name]은 이벤트 객체로 각 인풋태그의 name값이 들어옴
+      this.setState({[e.target.name]:e.target.value});
+    }
+
     render() {
       console.log(this.props.data)
       return (
@@ -12,9 +26,9 @@ class UpdateContent extends Component {
            this.props.onSubmit(e.target.title.value,e.target.desc.value);
            
          }.bind(this)}>
-           <p><input type="text" name ="title" placeholder="title"></input></p>
+           <p><input type="text" name ="title" placeholder="title" value={this.state.title} onChange={this.inputFormHandler}></input></p>
            <p>
-             <textarea name="desc" placeholder="description"></textarea>
+             <textarea name="desc" placeholder="description" value={this.state.desc} onChange={this.inputFormHandler}></textarea>
            </p>
            <p><input type="submit"></input></p>
          </form>
